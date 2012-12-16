@@ -7,5 +7,11 @@
 			<attribute name="javadoc_location" value="file:/D:/eclipse-jee-juno-SR1-win32/workspace/information-retrieval-web-search-engine/lib/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/filterbuilder.jar"/>
+	<classpathentry kind="lib" path="lib/htmllexer.jar"/>
+	<classpathentry kind="lib" path="lib/htmlparser.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/sax2.jar"/>
+	<classpathentry kind="lib" path="lib/thumbelina.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
