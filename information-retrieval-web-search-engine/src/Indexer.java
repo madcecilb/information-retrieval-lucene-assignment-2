@@ -11,6 +11,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 
 public class Indexer {
@@ -28,7 +29,7 @@ public class Indexer {
 	    //    The same analyzer should be used for indexing and searching
 		version = Version.LUCENE_36;
 		analyzer = new StandardAnalyzer(version);
-		indexDirectory = FSDirectory.open(new File("/index"));
+		indexDirectory = new RAMDirectory();
 		beginDomain = Domain(url);
 		indexed = new ArrayList<String>();
 		config = new IndexWriterConfig(version, 
