@@ -23,22 +23,27 @@ public class Indexer {
 	private Version version;
     private ArrayList<String> indexed;
 	private String beginDomain;
+	private String url;
 
-	public Indexer(String url) throws IOException {
+	public Indexer(String link) throws IOException {
 		// 0. Specify the analyzer for tokenizing text.
 	    //    The same analyzer should be used for indexing and searching
 		version = Version.LUCENE_36;
 		analyzer = new StandardAnalyzer(version);
 		indexDirectory = new RAMDirectory();
-		beginDomain = Domain(url);
+		url = link;
+		beginDomain = Domain(link);
 		indexed = new ArrayList<String>();
 		config = new IndexWriterConfig(version, 
 				analyzer);
 		
 		writer = new IndexWriter(indexDirectory,  config);
 	}
+	public void indexDocs(int maxDepth) throws Exception {
+		indexDocs(this.getUrl(), 0, maxDepth);
+	}
 	
-	private void indexDocs(String url, int currentDepth, int maxDepth) throws Exception {
+	public void indexDocs(String url, int currentDepth, int maxDepth) throws Exception {
 
 		  //index page
 		  Document doc = HTMLDocument.Document(url);
@@ -90,17 +95,6 @@ public class Indexer {
 		  writer.commit();
 	  }
 	  
-	  /**
-	   * @param args
-	 * @throws Exception 
-	   */
-	  public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		  Indexer indexerWeb = new Indexer("http://www.yahoo.com/");
-		  indexerWeb.indexDocs("http://www.yahoo.com/", 0, 2);
-		  indexerWeb.commit();
-		  System.out.println("done");
-	  }
 	  
 	  public IndexWriter getWriter() {
 		  return writer;
@@ -128,6 +122,10 @@ public class Indexer {
 
 	  public String getBeginDomain() {
 		  return beginDomain;
+	  }
+	  
+	  public String getUrl() {
+		  return url;
 	  }
 
 }
