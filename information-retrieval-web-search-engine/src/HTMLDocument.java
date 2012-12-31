@@ -73,7 +73,8 @@ public class HTMLDocument {
 
     // Add the title as a field that it can be searched and that is stored.
     doc.add(new Field("title", title, Field.Store.YES, Field.Index.ANALYZED));
-    doc.add(new Field("summary",summary, Field.Store.YES, Field.Index.NO));
+    doc.add(new Field("summary",summary, Field.Store.YES, Field.Index.ANALYZED));
+    doc.add(new Field("url",url, Field.Store.YES, Field.Index.NO));
 
 
 
