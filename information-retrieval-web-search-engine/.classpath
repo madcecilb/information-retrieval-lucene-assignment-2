@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="lib/lucene-core-3.6.1.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="file:/D:/eclipse-jee-juno-SR1-win32/workspace/information-retrieval-web-search-engine/lib/"/>
+			<attribute name="javadoc_location" value="file:/C:/studies/lucene-3.6.2/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/filterbuilder.jar"/>
@@ -13,5 +13,10 @@
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/sax2.jar"/>
 	<classpathentry kind="lib" path="lib/thumbelina.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-highlighter-3.6.2.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/studies/lucene-3.6.2/contrib/highlighter/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

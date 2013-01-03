@@ -15,12 +15,11 @@ public class Search {
 	   */
 	  public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		  Indexer indexerWeb = new Indexer("http://www.yahoo.com/");
+		  Indexer indexerWeb = new Indexer("http://www.techcrunch.com/");
 		  indexerWeb.indexDocs(2);
 		  indexerWeb.commit();
 		  System.out.println("done");
-		  String querystr = args.length > 0 ? args[0] : "music competition";
-		  //String querystr = "information retrieval";
+		  String querystr = args.length > 0 ? args[0] : "brand new application";
 		  
 		 
 		  //Searches in all fields
@@ -28,22 +27,8 @@ public class Search {
 				  indexerWeb.getVersion(),
 				  new String[] {"summary", "title"},
 				  indexerWeb.getAnalyzer()).parse(querystr);
-		    	
-		  //filter = TermRangeFilter.Less("modified", jan31);
-		  //filter = TermRangeFilter.More("modified", jan1);
-		  /*
-		    Date startDate = Date.valueOf("2007-10-01");
-		    Date endDate = Date.valueOf("2007-10-01");
 		    
-		    Query dateRangeQuery = NumericRangeQuery.newIntRange("date", 
-		    		startDate., 
-		    		Integer.parseInt(endDate.toString()), true, true);
-
-		    BooleanQuery booleanQuery = new BooleanQuery();
-		    booleanQuery.add(dateRangeQuery, Occur.MUST);
-		    booleanQuery.add(textQuery, Occur.MUST);*/
-		    
-		    // search
+		   // search
 		  int hitsPerPage = 10;
 		  IndexReader reader = IndexReader.open(indexerWeb.getIndexDirectory());
 		  IndexSearcher searcher = new IndexSearcher(reader);
