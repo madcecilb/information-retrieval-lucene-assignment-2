@@ -8,10 +8,6 @@ import org.htmlparser.util.ParserException;
 import java.util.Vector;
 import java.net.URL;
 import java.net.MalformedURLException;
-/**
- *
- * @author Stephen.Lane
- */
 
 public class LinkParser {
     
@@ -34,8 +30,8 @@ public class LinkParser {
             
         try
         {
-            parser = new Parser (url);
-            list = parser.extractAllNodesThatMatch (filter);
+            parser = new Parser(url);
+            list = parser.extractAllNodesThatMatch(filter);
 
             vector = new Vector<URL>();
             for (int i = 0; i < list.size (); i++){
