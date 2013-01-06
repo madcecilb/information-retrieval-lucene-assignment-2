@@ -10,7 +10,7 @@ public class Robot {
 		String[] strArray = robotString.split(" Disallow: ");
 		DisallowList = new ArrayList<>();
 		//"gent: *" is part of User-Agent: *, what means that this rule is for all agents
-		//here we use gent instead of agent, because ic could be agent or Agent
+		//here we use gent instead of agent, because it could be agent or Agent
 		if(strArray[0].contains("gent: *")){
 			IsForUs = true;
 			
