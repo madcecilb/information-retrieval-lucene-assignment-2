@@ -19,14 +19,16 @@ public class Search {
 	 * @throws Exception 
 	   */
 	  public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		  Indexer indexerWeb = new Indexer("http://www.ovgu.de");
+		  
+		  String url = args.length > 0 ? args[0] : "http://www.ovgu.de";
+		  Indexer indexerWeb = new Indexer(url);
 		  indexerWeb.indexDocs(2);
 		  indexerWeb.commit();
 		  System.out.println("done");
-		  String querystr = args.length > 0 ? args[0] : "Magdeburg";
-		  int excerptLength = 100;
-		  int maxNumberFragments = 2;
+		  
+		  String querystr = args.length > 1 ? args[1] : "Magdeburg";
+		  int excerptLength = args.length > 2 ? Integer.getInteger(args[2]) : 100;
+		  int maxNumberFragments = args.length > 3 ? Integer.getInteger(args[3]) : 2;
 		 
 		  //Searches in all fields except url
 		  Query textQuery = new MultiFieldQueryParser(
@@ -34,18 +36,20 @@ public class Search {
 				  new String[] {"summary", "title"},
 				  indexerWeb.getAnalyzer()).parse(querystr);
 		    
-		   // search
+		  // search
 		  int hitsPerPage = 10;
 		  IndexReader reader = IndexReader.open(indexerWeb.getIndexDirectory());
 		  IndexSearcher searcher = new IndexSearcher(reader);
 		  TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
 		  searcher.search(textQuery, collector);
+		  
+		  //get the most relevant documents
 		  ScoreDoc[] hits = collector.topDocs().scoreDocs;
 		  
+		  //highlight relevant excerpts
 		  QueryScorer scorer = new QueryScorer(textQuery, "summary");
 		  Highlighter highlighter = new Highlighter(scorer);
-		  highlighter.setTextFragmenter(
-		  new SimpleSpanFragmenter(scorer, excerptLength));
+		  highlighter.setTextFragmenter(new SimpleSpanFragmenter(scorer, excerptLength));
 		  
 		  
 		  //  display results
@@ -62,13 +66,14 @@ public class Search {
 		    				  d,
 		    				  indexerWeb.getAnalyzer());
 		      
+		      //get best excerpts
 		      String[] fragment =
 		    		  highlighter.getBestFragments(stream, summary, maxNumberFragments);
 		      
 		      System.out.println((i + 1) + ".  URL-" + d.get("url") + "\n  Score-" + hits[i].score + "\t" + d.get("title"));
 		      for (String string : fragment) {
 			      System.out.println(string);
-			}
+		      }
 		  }
 
 		  // reader can only be closed when there
