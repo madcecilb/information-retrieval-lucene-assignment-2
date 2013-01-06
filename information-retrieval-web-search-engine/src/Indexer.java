@@ -46,7 +46,6 @@ public class Indexer {
 		//index page
 		Document doc = JSOUPParser.document(url);
 		
-		System.out.println("adding " + doc.get("url"));
 		try {
 			
 			Boolean flag = true;
@@ -64,6 +63,7 @@ public class Indexer {
 			
 			
 			if(flag){
+				System.out.println(" adding " + doc.get("url"));
 				indexed.add(doc.get("url"));
 				writer.addDocument(doc);          // add docs unconditionally
 				//TODO: only add HTML docs
