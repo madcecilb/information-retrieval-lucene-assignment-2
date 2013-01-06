@@ -30,11 +30,11 @@ public class Indexer {
 		analyzer = new StandardAnalyzer(version);
 		indexDirectory = new RAMDirectory();
 		url = link;
-		beginDomain = Domain(link);
+		beginDomain = domain(link);
 		indexed = new ArrayList<String>();
 		config = new IndexWriterConfig(version, 
 				analyzer);
-		robots =  JSOUPParser.ParseRobotsTxT(link);
+		robots =  JSOUPParser.parseRobotsTxT(link);
 		writer = new IndexWriter(indexDirectory,  config);
 	}
 	public void indexDocs(int maxDepth) throws Exception {
@@ -44,7 +44,7 @@ public class Indexer {
 	public void indexDocs(String url, int currentDepth, int maxDepth) throws Exception {
 
 		//index page
-		Document doc = JSOUPParser.Document(url);
+		Document doc = JSOUPParser.document(url);
 		
 		System.out.println("adding " + doc.get("url"));
 		try {
@@ -72,7 +72,7 @@ public class Indexer {
 				if(currentDepth < maxDepth){
 					//get all links on the page then index them
 					LinkParser lp = new LinkParser(url);
-					URL[] links = lp.ExtractLinks();
+					URL[] links = lp.extractLinks();
 					
 					for (URL l : links) {
 						//make sure the URL hasn't already been indexed
@@ -97,7 +97,7 @@ public class Indexer {
 	  
 	//we parse only pages from the same domain. for example, for www.ovgu.de domain is ovgu, 
 	//and all links that we will parse have to contain string "ovgu"
-	private static String Domain(String url)
+	private static String domain(String url)
 	{
 		int firstDot;
 		int lastDot =  url.lastIndexOf(".");
