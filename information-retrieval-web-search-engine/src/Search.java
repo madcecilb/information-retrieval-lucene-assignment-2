@@ -20,15 +20,15 @@ public class Search {
 	   */
 	  public static void main(String[] args) throws Exception {
 		  
-		  String url = args.length > 0 ? args[0] : "http://www.ovgu.de";
+		  String url = args.length > 0 ? args[0] : "http://www.techcrunch.com";
 		  Indexer indexerWeb = new Indexer(url);
 		  indexerWeb.indexDocs(2);
 		  indexerWeb.commit();
-		  System.out.println("done");
+		  System.out.println("indexing is done");
 		  
-		  String querystr = args.length > 1 ? args[1] : "Magdeburg";
-		  int excerptLength = args.length > 2 ? Integer.getInteger(args[2]) : 100;
-		  int maxNumberFragments = args.length > 3 ? Integer.getInteger(args[3]) : 2;
+		  String querystr = args.length > 1 ? args[1] : "brand new device";
+		  int excerptLength = args.length > 2 ? Integer.decode(args[2]) : 100;
+		  int maxNumberFragments = args.length > 3 ? Integer.decode(args[3]) : 2;
 		 
 		  //Searches in all fields except url
 		  Query textQuery = new MultiFieldQueryParser(
@@ -70,7 +70,7 @@ public class Search {
 		      String[] fragment =
 		    		  highlighter.getBestFragments(stream, summary, maxNumberFragments);
 		      
-		      System.out.println((i + 1) + ".  URL-" + d.get("url") + "\n  Score-" + hits[i].score + "\t" + d.get("title"));
+		      System.out.println((i + 1) + ".  URL: " + d.get("url") + "\n  Score: " + hits[i].score + "\n Title: " + d.get("title"));
 		      for (String string : fragment) {
 			      System.out.println(string);
 		      }
