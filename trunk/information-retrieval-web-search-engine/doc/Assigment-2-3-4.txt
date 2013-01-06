@@ -1,0 +1,73 @@
+Assignment 2-3-4
+
+1. Class LinkParser
+	* Looks for all links on a web-page and creates a list of the links using htmlparser
+
+2. Class JSOUPParser
+	* Method document() parses web page using Jsoup, extracts title and text from a web-page, returns lucene documents
+	* Method parseRobotsTxT() creates a list of agents and their restrictions 
+
+3. Class Indexer
+	*indexDocs(int maxDepth) initial call of the method indexDocs(String url, int currentDepth, int maxDepth)
+	*indexDocs(String url, int currentDepth, int maxDepth) recursively parses webpage, 
+		on each step checks whether it's forbidden by robots.txt to parse this link or not. 
+		Parses only pages with a same domain.
+		Can't parse zip files. 
+	*domain(String url) gets domain of an url, for example for http://www.ovgu.de domain is ovgu
+4. Class Robot
+	* Checks, whether the rules hold for all agents or just for specific ones. 
+
+	* Parses the file and takes into account only dissallow tag.
+
+		String[] strArray = robotString.split(" Disallow: ");
+                disallowList = new ArrayList<>();
+
+		if(strArray[0].contains("gent: *")){
+ 			considerable = true;
+                     
+ 			for(int i = 1; i < strArray.length; i++){
+ 			disallowList.add(strArray[i].split(" ")[0]);
+ 			}
+		}
+		else{
+			considerable = false;
+ 		}
+                
+5. Class Search
+	* Read the query, parse it and build a lucene Query out of it:
+
+	String querystr = args.length > 2 ? args[2] : "brand new device";
+                  int excerptLength = args.length > 3 ? Integer.decode(args[3]) : 100;
+                  int maxNumberFragments = args.length > 4 ? Integer.decode(args[4]) : 2;
+	
+	* Using the Query we create a Searcher to search the index. Then a TopScoreDocCollector 
+		is instantiated to collect the top 10 scoring hits.
+
+		  int hitsPerPage = 10;
+                  IndexReader reader = IndexReader.open(indexerWeb.getIndexDirectory());
+                  IndexSearcher searcher = new IndexSearcher(reader);
+                  TopScoreDocCollector collector = TopScoreDocCollector.create(hitsPerPage, true);
+                  searcher.search(textQuery, collector);
+	
+	* Gets the most relevant documents
+	 	ScoreDoc[] hits = collector.topDocs().scoreDocs;
+	 	
+	* Creates a Highlighter for the text field, defines maximum excerpt length
+			QueryScorer scorer = new QueryScorer(textQuery, "summary");
+		  	Highlighter highlighter = new Highlighter(scorer);
+		  	highlighter.setTextFragmenter(new SimpleSpanFragmenter(scorer, excerptLength));
+		  	
+	* Gets tokenization of the best results
+	
+	* Gets a number of best fragments
+		      String[] fragment =
+		    		  highlighter.getBestFragments(stream, summary, maxNumberFragments);		 	
+	
+	* Displays resultsSystem.out.println("Found " + hits.length + " hits.");
+                  for(int i=0;i<hits.length;i++) {
+                          int docId = hits[i].doc;
+                      Document d = searcher.doc(docId); 
+                      String summary = d.get("summary");
+	               for (String string : fragment) {
+				      System.out.println(string);
+			      }

@@ -37,6 +37,7 @@ public class Indexer {
 		robots =  JSOUPParser.parseRobotsTxT(link);
 		writer = new IndexWriter(indexDirectory,  config);
 	}
+	
 	public void indexDocs(int maxDepth) throws Exception {
 		indexDocs(this.getUrl(), 0, maxDepth);
 	}
