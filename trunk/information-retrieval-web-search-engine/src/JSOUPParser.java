@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 
 import org.apache.lucene.document.Document;

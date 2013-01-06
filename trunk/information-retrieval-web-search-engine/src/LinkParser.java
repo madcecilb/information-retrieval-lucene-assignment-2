@@ -21,7 +21,7 @@ public class LinkParser {
     NodeList list;
     LinkTag link;
     URL[] linkArray;
-    Vector vector;
+    Vector<URL> vector;
     
     public LinkParser(String Url)
     {
@@ -37,18 +37,19 @@ public class LinkParser {
             parser = new Parser (url);
             list = parser.extractAllNodesThatMatch (filter);
 
-              vector = new Vector();
-                for (int i = 0; i < list.size (); i++)
-                       try
-                        {
-                            link = (LinkTag)list.elementAt (i);
-                            vector.add(new URL (link.getLink ()));
-                        }
-                        catch (MalformedURLException murle)
-                        {
-                        }
-                linkArray = new URL[vector.size ()];
-                vector.copyInto (linkArray);
+            vector = new Vector<URL>();
+            for (int i = 0; i < list.size (); i++){
+            	try
+            	{
+            		link = (LinkTag)list.elementAt (i);
+            		vector.add(new URL (link.getLink ()));
+            	}
+            	catch (MalformedURLException murle)
+            	{
+            	}
+            }                     
+            linkArray = new URL[vector.size ()];
+            vector.copyInto (linkArray);
         }
         catch (ParserException e)
         {

@@ -25,7 +25,8 @@ public class Search {
 		  indexerWeb.commit();
 		  System.out.println("done");
 		  String querystr = args.length > 0 ? args[0] : "Magdeburg";
-		  
+		  int excerptLength = 100;
+		  int maxNumberFragments = 2;
 		 
 		  //Searches in all fields except url
 		  Query textQuery = new MultiFieldQueryParser(
@@ -44,7 +45,7 @@ public class Search {
 		  QueryScorer scorer = new QueryScorer(textQuery, "summary");
 		  Highlighter highlighter = new Highlighter(scorer);
 		  highlighter.setTextFragmenter(
-		  new SimpleSpanFragmenter(scorer));
+		  new SimpleSpanFragmenter(scorer, excerptLength));
 		  
 		  
 		  //  display results
@@ -61,11 +62,13 @@ public class Search {
 		    				  d,
 		    				  indexerWeb.getAnalyzer());
 		      
-		      String fragment =
-		    		  highlighter.getBestFragment(stream, summary);
+		      String[] fragment =
+		    		  highlighter.getBestFragments(stream, summary, maxNumberFragments);
 		      
 		      System.out.println((i + 1) + ".  URL-" + d.get("url") + "\n  Score-" + hits[i].score + "\t" + d.get("title"));
-		      System.out.println(fragment);
+		      for (String string : fragment) {
+			      System.out.println(string);
+			}
 		  }
 
 		  // reader can only be closed when there
