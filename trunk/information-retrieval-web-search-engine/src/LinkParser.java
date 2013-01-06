@@ -28,9 +28,9 @@ public class LinkParser {
         url = Url;
     }
     
-    public URL[] ExtractLinks()
+    public URL[] extractLinks()
     {
-      filter = new NodeClassFilter(LinkTag.class);        
+    	filter = new NodeClassFilter(LinkTag.class);        
             
         try
         {

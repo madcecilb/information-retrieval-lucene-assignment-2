@@ -9,7 +9,7 @@ import org.jsoup.Jsoup;
 
 public class JSOUPParser {
 	
-	public static Document Document(String url)
+	public static Document document(String url)
 		       throws IOException, InterruptedException  {
 		// make a new, empty document
 		Document doc = new Document();
@@ -33,7 +33,7 @@ public class JSOUPParser {
 		return doc;
 	}
 
-	public static ArrayList<Robot> ParseRobotsTxT(String url) throws IOException{
+	public static ArrayList<Robot> parseRobotsTxT(String url) throws IOException{
 		org.jsoup.nodes.Document jSoupDocument = Jsoup.connect(url + "/robots.txt").get();
 		ArrayList<Robot> robots = new ArrayList<>();
 		String str = jSoupDocument.body().text();
